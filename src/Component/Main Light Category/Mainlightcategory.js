@@ -46,7 +46,7 @@ const Mainlightcategory = () => {
     <>
       {
         flag ?
-          (<div className='admin w-3/4'>
+          (<div className='admin w-3/4 px-2'>
             <div className="logout absolute right-2 top-2" >
               <Link to="/logout">  <img src={LogoutIcon} alt="Image" /></Link>
             </div>

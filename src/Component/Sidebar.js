@@ -2,6 +2,7 @@ import React from 'react'
 import adminImg from '../icons/admin.png'
 import tableImg from '../icons/table.png'
 import categoryImg from '../icons/categories.png'
+import eliteLogo from '../icons/elite_logo.webp'
 import { Link } from 'react-router-dom'
 
 const Sidebars = () => {
@@ -9,7 +10,8 @@ const Sidebars = () => {
         <>
             
             <div className="flex flex-col w-1/4 h-screen py-8 bg-white border-r dark:bg-gray-900 dark:border-gray-700">
-                <h2 className="text-3xl font-semibold text-center text-gray-800 dark:text-white">Elite Electrical</h2>
+                {/* <h2 className="text-3xl font-semibold text-center text-gray-800 dark:text-white">Elite Electrical</h2> */}
+                <img src={eliteLogo} alt="Image" className='bg-black h-24 w-48 m-auto rounded-lg p-2' />
 
                 <div className="flex flex-col justify-between flex-1 mt-6">
                     <nav>
