@@ -17,8 +17,8 @@ const Admintable = () => {
   const [data, setData] = useState([])
 
   const notify = (p, msg) => p ? toast.success(msg) : toast.error(msg);
-
   const [status, setStatus] = useState(false)
+
 
   useEffect(() => {
     cheackAuth() ? setFlag(true) : (navigate("/"));
@@ -37,6 +37,8 @@ const Admintable = () => {
         notify(0, "Internal server error..")
       }
     })
+
+
   }, [status])
 
 
@@ -73,7 +75,7 @@ const Admintable = () => {
           </div>
           <ToastContainer position="bottom-left" hideProgressBar="true" autoClose="6000" />
           <div className="overflow-x-auto relative shadow-md sm:rounded-lg order-2">
-            <p className="mt-1 mb-3 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold">Active Admins</p>
+            <p className="mt-1 mb-3 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold border-b-2 p-y-2 border-indigo-800 w-1/2 m-auto">Active Admins</p>
 
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-2">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

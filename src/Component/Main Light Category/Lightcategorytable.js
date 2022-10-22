@@ -72,7 +72,7 @@ const Lightcategorytable = () => {
             </div>
             <ToastContainer position="bottom-left" hideProgressBar="true" autoClose="6000" />
             <div className="overflow-x-auto relative shadow-md sm:rounded-lg order-2">
-              <p className="mt-1 mb-3 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold">Active Main Light Categories</p>
+              <p className="mt-1 mb-3 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold border-b-2 p-y-2 border-indigo-800 w-1/2 m-auto">Active Main Light Categories</p>
 
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-2">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

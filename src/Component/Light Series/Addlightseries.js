@@ -74,7 +74,7 @@ const Addlightseries = () => {
               <ToastContainer position="bottom-left" hideProgressBar="true" autoClose="6000" />
               <div className="w-full px-10 overflow-hidden bg-white rounded-lg border-2 shadow-lg dark:bg-gray-800">
                 <div className="px-6 py-4">
-                  <p className="mt-1 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold">Add Light Series</p>
+                  <p className="mt-1 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold border-b-2 p-y-2 border-indigo-800 w-1/2 m-auto">Add Light Series</p>
 
                   <form onSubmit={handleSubmit} autoComplete="off">
                     <div className="w-full mt-4">

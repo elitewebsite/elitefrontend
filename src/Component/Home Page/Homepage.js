@@ -35,10 +35,10 @@ const Homepage = () => {
         }).catch((err) => {
             if (err.response.status === 401) {
                 navigate('/logout')
-              }
-              else{
+            }
+            else {
                 notify(0, "Internal server error..")
-              }
+            }
         })
 
         e.target.carousel1title.value = "";
@@ -70,32 +70,42 @@ const Homepage = () => {
 
                                     <form onSubmit={handleSubmit} autoComplete="off">
                                         {/* Corousel 1 Title & Image */}
-                                        <div className="w-full mt-4">
-                                            <h3 className='text-center mt-8 mb-8 font-bold'>Add Carousel Details</h3>
-                                            <label htmlFor="carousel1title">Add Carousel 1 Title </label>
-                                            <input type="text" name='carousel1title' placeholder="Carousel 1 Title" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
+                                        <h3 className='text-center mt-8 mb-8 font-bold text-lg border-b-2 p-y-2 border-indigo-800 w-1/2 m-auto'>Add Carousel Details</h3>
+
+                                        <div className="carousel1 flex">
+
+                                            <div className="w-full mt-4">
+                                                <label htmlFor="carousel1title">Add Carousel 1 Title </label>
+                                                <input type="text" name='carousel1title' placeholder="Carousel 1 Title" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
+                                            </div>
+
+                                            <div className="w-full mt-4">
+                                                <label htmlFor="file1">Upload Carousel 1 Image </label>
+                                                <input type="file" name='file1' className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
+                                            </div>
                                         </div>
 
-                                        <div className="w-full mt-4">
-                                            <label htmlFor="file1">Upload Carousel 1 Image </label>
-                                            <input type="file" name='file1' className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
-                                        </div>
+
                                         <br />
-
                                         {/* Corousel 2 Title & Image */}
-                                        <div className="w-full mt-4">
-                                            <label htmlFor="carousel2title">Add Carousel 2 Title </label>
-                                            <input type="text" name='carousel2title' placeholder="Carousel 1 Title" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
+                                        <div className="carousel2 flex">
+                                            <div className="w-full mt-4">
+                                                <label htmlFor="carousel2title">Add Carousel 2 Title </label>
+                                                <input type="text" name='carousel2title' placeholder="Carousel 1 Title" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
+                                            </div>
+
+                                            <div className="w-full mt-4">
+                                                <label htmlFor="file2">Upload Carousel 1 Image </label>
+                                                <input type="file" name='file2' className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
+                                            </div>
                                         </div>
 
-                                        <div className="w-full mt-4">
-                                            <label htmlFor="file2">Upload Carousel 1 Image </label>
-                                            <input type="file" name='file2' className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
-                                        </div>
+                                        
+
 
 
                                         {/* About 1 Title, Description & image */}
-                                        <h3 className='text-center mt-8 mb-8 font-bold'>Add About Section Details</h3>
+                                        <h3 className='text-center mt-8 mb-8 font-bold text-lg border-b-2 p-y-2 border-indigo-800 w-1/2 m-auto'>Add About Section Details</h3>
 
                                         <div className="w-full mt-4">
                                             <label htmlFor="about1title">Add About 1 Title </label>

@@ -19,7 +19,7 @@ const Updateproduct = () => {
     // console.log(location.state.id)
     const notify = (p, msg) => p ? toast.success(msg) : toast.error(msg);
     const [prev, setPrev] = useState([])
-    const [category, setCategory] = useState([])
+    // const [category, setCategory] = useState([])
     const [value, setValue] = useState([]);
     const [images, setImages] = useState([])
     const [loading, setLoading] = useState(false)
@@ -32,22 +32,22 @@ const Updateproduct = () => {
     useEffect(() => {
         cheackAuth() ? setFlag(true) : (navigate("/"));
 
-        axios.get("http://localhost:3032/admincrud/getseriesname", {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                "Authorization": localStorage.getItem('token')
-            },
-        }).then((res) => {
-            setCategory(res.data)
+        // axios.get("http://localhost:3032/admincrud/getseriesname", {
+        //     headers: {
+        //         "Content-Type": "multipart/form-data",
+        //         "Authorization": localStorage.getItem('token')
+        //     },
+        // }).then((res) => {
+        //     setCategory(res.data)
 
-        }).catch((err) => {
-            if (err.response.status === 401) {
-                navigate('/logout')
-            }
-            else {
-                notify(0, "Internal server error..")
-            }
-        })
+        // }).catch((err) => {
+        //     if (err.response.status === 401) {
+        //         navigate('/logout')
+        //     }
+        //     else {
+        //         notify(0, "Internal server error..")
+        //     }
+        // })
 
     }, [location.state.id])
 
@@ -83,40 +83,46 @@ const Updateproduct = () => {
         // Whatever data received from dynamic inputs for light parameters + all form data received after submit. we are send as payload
         //const payload = { ...data, "info": value }
         const payload = { ...data, 'info': JSON.stringify(value), 'id': location.state.id }
+        if (payload.file1.size < 500000 && payload.file2.size < 500000 && payload.file3.size < 500000 && payload.file4.size < 500000 && payload.pdffile.size < 500000 && payload.pdffile.type === "application/pdf") {
+            axios.post('http://localhost:3032/admincrud/updateproduct', payload, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": localStorage.getItem('token')
+                },
+            }).then((res) => {
 
-        // console.log(payload)
-        axios.post('http://localhost:3032/admincrud/updateproduct', payload, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                "Authorization": localStorage.getItem('token')
-            },
-        }).then((res) => {
-
-            notify(1, "Product Descirption Added Successfully..")
-            setLoading(false)
-
-        }).catch((err) => {
-            if (err.response.status === 401) {
-                navigate('/logout')
-            }
-            else {
-                notify(0, "Internal server error..")
+                notify(1, "Product Descirption Added Successfully..")
                 setLoading(false)
-            }
-        })
 
-        e.target.series_name.value = ""
-        e.target.product_name.value = ""
-        e.target.model_no.value = ""
-        e.target.product_description.value = ""
-        e.target.youtube.value = ""
-        e.target.news.value = ""
-        e.target.file1.value = ""
-        e.target.file2.value = ""
-        e.target.file3.value = ""
-        e.target.file4.value = ""
-        e.target.pdffile.value = ""
-        setValue([])
+            }).catch((err) => {
+                if (err.response.status === 401) {
+                    navigate('/logout')
+                }
+                else {
+                    notify(0, "Internal server error..")
+                    setLoading(false)
+                }
+            })
+
+            e.target.series_name.value = ""
+            e.target.product_name.value = ""
+            e.target.model_no.value = ""
+            e.target.product_description.value = ""
+            e.target.youtube.value = ""
+            e.target.news.value = ""
+            e.target.file1.value = ""
+            e.target.file2.value = ""
+            e.target.file3.value = ""
+            e.target.file4.value = ""
+            e.target.pdffile.value = ""
+            setValue([])
+        }
+        else {
+            window.alert("file size should be less than 500kb and should be in given format....")
+            setLoading(false)
+        }
+
+
     }
     //console.log(prev.info)
     //remove the item from all buckect
@@ -145,29 +151,29 @@ const Updateproduct = () => {
                         <div className="form">
                             <div className="w-full px-10 overflow-hidden bg-white rounded-lg border-2 shadow-lg dark:bg-gray-800">
                                 <div className="px-6 py-4">
-                                    <p className="mt-1 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold">Update Product</p>
+                                    <p className="mt-1 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold border-b-2 p-y-2 border-indigo-800 w-1/2 m-auto">Update Product</p>
                                     <ToastContainer position="bottom-left" hideProgressBar="true" autoClose="6000" />
                                     <form onSubmit={handleSubmit} autoComplete="off">
 
                                         <div className="w-full mt-4">
                                             <label htmlFor="series_name"><b>Light Series:</b> </label>
-                                            <select name="series_name" id="series_name" value={prev.series_name} onChange={(e) => { setPrev({ series_name: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300">
-                                                <option value=""> -- Select Light Series --</option>
-                                                {category.map((value, index) => {
+                                            <select name="series_name" id="series_name" value={prev.series_name} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300">
+                                                <option value=""> {prev.series_name}</option>
+                                                {/* {category.map((value, index) => {
                                                     return (<option key={index} value={value.series}>{value.series}</option>);
-                                                })}
+                                                })} */}
                                             </select>
 
                                         </div>
 
                                         <div className="w-full mt-4">
                                             <label htmlFor="product_name"><b>Product Name:</b></label>
-                                            <input type="text" name='product_name' value={prev.product_name} onChange={(e) => { setPrev({ product_name: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required/>
+                                            <input type="text" name='product_name' value={prev.product_name} onChange={(e) => { setPrev({ product_name: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
                                         </div>
 
                                         <div className="w-full mt-4">
                                             <label htmlFor="model_no"> <b>Product Model Number:</b></label>
-                                            <input type="text" name='model_no' value={prev.model_no} onChange={(e) => { setPrev({ model_no: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required/>
+                                            <input type="text" name='model_no' value={prev.model_no} onChange={(e) => { setPrev({ model_no: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
                                         </div>
 
                                         <h1 className='text-xl capitalize font-bold mt-4'>previous images</h1>
