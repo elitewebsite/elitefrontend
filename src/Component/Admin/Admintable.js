@@ -40,8 +40,6 @@ const Admintable = () => {
 
 
   }, [status])
-
-
   const deleteAdmin = (id) => {
     const delMsg = window.confirm("Do you really want to delete ?")
     if (delMsg) {

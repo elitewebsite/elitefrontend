@@ -10,6 +10,7 @@ import LogoutIcon from '../../icons/exit.png'
 const Homepage = () => {
 
     const [flag, setFlag] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate();
 
@@ -17,40 +18,48 @@ const Homepage = () => {
 
     useEffect(() => {
         cheackAuth() ? setFlag(true) : (navigate("/"));
-    }, [])
+    }, [navigate])
 
     const handleSubmit = (e) => {
         e.preventDefault()
         const formdata = new FormData(e.target);
         const data = Object.fromEntries(formdata.entries())
-        console.log(data)
+        if (data.file1.size < 500000 && data.file2.size < 500000 && data.file3.size < 500000 && data.file1.size < 500000) {
+            axios.post("http://localhost:3032/homedynamic/updatehomepage", data, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }).then((res) => {
 
-        axios.post("http://localhost:3032/homedynamic/updatehomepage", data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        }).then((res) => {
-            console.log(res)
-            notify(1, "Home Page Updated Successfully..")
-        }).catch((err) => {
-            if (err.response.status === 401) {
-                navigate('/logout')
-            }
-            else {
-                notify(0, "Internal server error..")
-            }
-        })
+                notify(1, "Home Page Updated Successfully..")
+                setLoading(false)
+            }).catch((err) => {
+                if (err.response.status === 401) {
+                    navigate('/logout')
+                }
+                else {
+                    notify(0, "Internal server error..")
+                    setLoading(false)
+                }
+            })
 
-        e.target.carousel1title.value = "";
-        e.target.file1.value = "";
-        e.target.carousel2title.value = "";
-        e.target.file2.value = "";
-        e.target.about1title = "";
-        e.target.about1desc.value = "";
-        e.target.file3.value = "";
-        e.target.about2title = "";
-        e.target.about2desc.value = "";
-        e.target.file4.value = "";
+            e.target.carousel1title.value = "";
+            e.target.file1.value = "";
+            e.target.carousel2title.value = "";
+            e.target.file2.value = "";
+            e.target.about1title = "";
+            e.target.about1desc.value = "";
+            e.target.file3.value = "";
+            e.target.about2title = "";
+            e.target.about2desc.value = "";
+            e.target.file4.value = "";
+        }
+        else {
+            window.alert("file size should be less than 500kb and should be in given format..")
+            setLoading(false)
+        }
+
+
 
     }
 
@@ -100,7 +109,7 @@ const Homepage = () => {
                                             </div>
                                         </div>
 
-                                        
+
 
 
 
