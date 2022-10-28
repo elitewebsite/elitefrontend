@@ -113,7 +113,7 @@ const Lightcategorytable = () => {
                       </td>
 
                       <td className="py-4 px-6">
-                        <img src={value.url} alt="Image" class="h-12 w-50" />
+                        <img src={value.url} alt="Image" className="h-12 w-50" />
                       </td>
 
                       <td className="py-4 px-6">

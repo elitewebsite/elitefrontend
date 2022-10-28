@@ -65,7 +65,7 @@ const Mainlightcategory = () => {
         })
 
         e.target.name.value = "";
-        e.target.myfile.value="";
+        e.target.myfile.value = "";
     }
 
     return (
@@ -85,7 +85,7 @@ const Mainlightcategory = () => {
                                     <form onSubmit={handleSubmit} autoComplete="off">
                                         <div className="w-full mt-5">
                                             <label htmlFor="name">Main Light Category Name</label>
-                                            <input type="text" name="name" placeholder={prev.name} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" aria-label="Email Address" />
+                                            <input type="text" name="name" value={prev.name} onChange={(e) => { setPrev({ name: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" aria-label="Email Address" />
                                         </div>
 
                                         <div className="w-full mt-5">

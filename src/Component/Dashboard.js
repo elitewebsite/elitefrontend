@@ -30,7 +30,7 @@ const Dashboard = () => {
 
             <h1 className='mt-4 text-center text-2xl font-bold'>Welcome to Admin Panel</h1>
 
-            <div className="upper grid grid-cols-2 gap-4 mt-20 p-4" >
+            <div className="upper grid grid-cols-2 gap-6 mt-20 p-4" >
               <div className="w-full border-b-4 border-indigo-700 bg-gray-200 h-36 rounded-xl flex justify-around content-center items-center">
                 <span className='text-lg font-bold'>Total Products</span>
                 <div className="bg-green-500 h-24 w-24 rounded-full text-bottom text-xl font-bold text-black p-7">84</div>

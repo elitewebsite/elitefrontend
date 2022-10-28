@@ -32,22 +32,6 @@ const Updateproduct = () => {
     useEffect(() => {
         cheackAuth() ? setFlag(true) : (navigate("/"));
 
-        // axios.get("http://localhost:3032/admincrud/getseriesname", {
-        //     headers: {
-        //         "Content-Type": "multipart/form-data",
-        //         "Authorization": localStorage.getItem('token')
-        //     },
-        // }).then((res) => {
-        //     setCategory(res.data)
-
-        // }).catch((err) => {
-        //     if (err.response.status === 401) {
-        //         navigate('/logout')
-        //     }
-        //     else {
-        //         notify(0, "Internal server error..")
-        //     }
-        // })
 
     }, [location.state.id])
 
@@ -59,6 +43,7 @@ const Updateproduct = () => {
                 "Authorization": localStorage.getItem('token')
             },
         }).then((res) => {
+
             setPrev(res.data)
             setValue(res.data.info)
             setImages(res.data.images)
@@ -81,8 +66,9 @@ const Updateproduct = () => {
         const data = Object.fromEntries(formdata.entries())
         setLoading(true)
         // Whatever data received from dynamic inputs for light parameters + all form data received after submit. we are send as payload
-        //const payload = { ...data, "info": value }
+
         const payload = { ...data, 'info': JSON.stringify(value), 'id': location.state.id }
+        console.log(payload)
         if (payload.file1.size < 500000 && payload.file2.size < 500000 && payload.file3.size < 500000 && payload.file4.size < 500000 && payload.pdffile.size < 500000 && payload.pdffile.type === "application/pdf") {
             axios.post('http://localhost:3032/admincrud/updateproduct', payload, {
                 headers: {
@@ -124,7 +110,7 @@ const Updateproduct = () => {
 
 
     }
-    //console.log(prev.info)
+
     //remove the item from all buckect
     const removeItem = (idx) => {
         const filterData = value.filter((element, index) => {
@@ -158,22 +144,21 @@ const Updateproduct = () => {
                                         <div className="w-full mt-4">
                                             <label htmlFor="series_name"><b>Light Series:</b> </label>
                                             <select name="series_name" id="series_name" value={prev.series_name} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300">
-                                                <option value=""> {prev.series_name}</option>
-                                                {/* {category.map((value, index) => {
-                                                    return (<option key={index} value={value.series}>{value.series}</option>);
-                                                })} */}
+
+                                                <option value={prev.series_name} >{prev.series_name}</option>
+
                                             </select>
 
                                         </div>
 
                                         <div className="w-full mt-4">
                                             <label htmlFor="product_name"><b>Product Name:</b></label>
-                                            <input type="text" name='product_name' value={prev.product_name} onChange={(e) => { setPrev({ product_name: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
+                                            <input type="text" name='product_name' value={prev.product_name} onChange={(e) => { setPrev({ ...prev, product_name: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
                                         </div>
 
                                         <div className="w-full mt-4">
                                             <label htmlFor="model_no"> <b>Product Model Number:</b></label>
-                                            <input type="text" name='model_no' value={prev.model_no} onChange={(e) => { setPrev({ model_no: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
+                                            <input type="text" name='model_no' value={prev.model_no} onChange={(e) => { setPrev({ ...prev, model_no: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
                                         </div>
 
                                         <h1 className='text-xl capitalize font-bold mt-4'>previous images</h1>
@@ -207,7 +192,7 @@ const Updateproduct = () => {
 
                                         <div className="w-full mt-4">
                                             <label htmlFor="product_description"><b>Product Description:</b></label>
-                                            <textarea name='product_description' value={prev.product_description} onChange={(e) => { setPrev({ product_description: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" />
+                                            <textarea name='product_description' value={prev.product_description} onChange={(e) => { setPrev({ ...prev, product_description: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" />
                                         </div>
 
                                         <div className="w-full mt-4">
@@ -217,12 +202,12 @@ const Updateproduct = () => {
 
                                         <div className="w-full mt-4">
                                             <label htmlFor="youtube"><b>YouTube Video Link:</b></label>
-                                            <input type="text" name='youtube' value={prev.youtube} onChange={(e) => { setPrev({ youtube: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" />
+                                            <input type="text" name='youtube' value={prev.youtube} onChange={(e) => { setPrev({ ...prev, youtube: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" />
                                         </div>
 
                                         <div className="w-full mt-4">
                                             <label htmlFor="news"><b>News Data:</b></label>
-                                            <textarea name='news' value={prev.news} onChange={(e) => { setPrev({ news: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" />
+                                            <textarea name='news' value={prev.news} onChange={(e) => { setPrev({ ...prev, news: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" />
                                         </div>
 
                                         <h1 className=" mt-12 mb-4 text-lg"> <b> Add Product Parameters</b></h1>
