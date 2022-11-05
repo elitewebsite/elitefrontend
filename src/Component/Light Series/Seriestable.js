@@ -24,7 +24,7 @@ const Seriestable = () => {
   useEffect(() => {
     cheackAuth() ? setFlag(true) : (navigate("/"));
 
-    axios.get('http://localhost:3032/admincrud/getallseries', {
+    axios.get('https://elitebackend.vercel.app/admincrud/getallseries', {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
@@ -44,10 +44,11 @@ const Seriestable = () => {
 
   // Delete Series
 
-  const deleteSeries = (id) => {
+  const deleteSeries = (id, series) => {
     const delMsg = window.confirm('All products under series will be deleted..! Do you really want to delete Series??')
+    //window.alert(id)
     if (delMsg) {
-      axios.post('http://localhost:3032/admincrud/deleteseries', { id }, {
+      axios.post('https://elitebackend.vercel.app/admincrud/deleteseries', { id, series }, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": localStorage.getItem('token')
@@ -135,7 +136,7 @@ const Seriestable = () => {
                       <td className="py-4 px-6">
                         <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                           <img src={delIcon} alt="Image" onClick={() => {
-                            deleteSeries(value._id)
+                            deleteSeries(value._id, value.series)
                           }} />
                         </a>
                       </td>

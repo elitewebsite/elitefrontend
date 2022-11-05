@@ -9,23 +9,25 @@ import cheackAuth from '../../Auth'
 import LogoutIcon from '../../icons/exit.png'
 
 const Updatelightseries = () => {
+    const imageFormator = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onloadend = () => {
+                resolve(reader.result)
+            }
+        })
+    }
     const [flag, setFlag] = useState(false)
-
     const navigate = useNavigate();
-
     const location = useLocation()
-
     const [category, setCategory] = useState([])
-
     const [prev, setPrev] = useState([])
-
     const notify = (p, msg) => p ? toast.success(msg) : toast.error(msg);
-
     useEffect(() => {
         cheackAuth() ? setFlag(true) : (navigate("/"));
-
         //This API will fetch already added series which we want to update now
-        axios.post("http://localhost:3032/admincrud/getseriesbyid", { id: location.state.id }, {
+        axios.post("https://elitebackend.vercel.app/admincrud/getseriesbyid", { id: location.state.id }, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 "Authorization": localStorage.getItem('token')
@@ -42,7 +44,7 @@ const Updatelightseries = () => {
         });
 
         //This API will give main light categories which will be displayed in dropdown
-        axios.get("http://localhost:3032/admincrud/getlightcategory", {
+        axios.get("https://elitebackend.vercel.app/admincrud/getlightcategory", {
             headers: {
                 "Content-Type": "multipart/form-data",
                 "Authorization": localStorage.getItem('token')
@@ -60,32 +62,36 @@ const Updatelightseries = () => {
 
     }, [])
 
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const formdata = new FormData(e.target)
         const data = Object.fromEntries(formdata.entries())
-        formdata.append("id", location.state.id)
-        const payload = { ...data, "id": location.state.id }
+        if (data.myfile.size < 500000) {
+            const payload = { ...data, "id": location.state.id, myfile: await imageFormator(data.myfile) }
 
-        axios.post("http://localhost:3032/admincrud/updateseries", payload, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                "Authorization": localStorage.getItem('token')
-            },
-        }).then((res) => {
-            notify(1, "Updated Successfully..")
-        }).catch((err) => {
-            if (err.response.status === 401) {
-                navigate('/logout')
-            }
-            else {
-                notify(0, "Internal server error..")
-            }
-        })
+            axios.post("https://elitebackend.vercel.app/admincrud/updateseries", payload, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": localStorage.getItem('token')
+                },
+            }).then((res) => {
+                notify(1, "Updated Successfully..")
+            }).catch((err) => {
+                if (err.response.status === 401) {
+                    navigate('/logout')
+                }
+                else {
+                    notify(0, "Internal server error..")
+                }
+            })
 
-        e.target.series.value = "";
-        e.target.myfile.value = "";
+            e.target.series.value = "";
+            e.target.myfile.value = "";
+        }
+        else {
+            window.alert("file size should be less than 500kb and should be in given format..")
+        }
+
     }
 
     return (
@@ -105,12 +111,8 @@ const Updatelightseries = () => {
                                     <form onSubmit={handleSubmit} autoComplete="off">
                                         <div className="w-full mt-4">
                                             <label htmlFor="mainlight">Main Light Category: </label>
-                                            <select name="mainlight" id="mainlight" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required>
-                                                <option value=""> -- Select Main Light Category --</option>
-                                                {category.map((value, index) => {
-                                                    return (<option key={index} value={value.name}>{value.name}</option>);
-                                                })}
-             
+                                            <select name="mainlight" id="mainlight" value={prev.mainlight} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required>
+                                                <option value={prev.mainlight}>{prev.mainlight}</option>
                                             </select>
 
                                         </div>

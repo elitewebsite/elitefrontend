@@ -7,29 +7,42 @@ import cheackAuth from '../../Auth'
 import LogoutIcon from '../../icons/exit.png'
 
 const Mainlightcategory = () => {
+
+  const imageFormator = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onloadend = () => {
+        resolve(reader.result)
+      }
+    })
+  }
+
   const [flag, setFlag] = useState(false)
-
   const navigate = useNavigate();
-
   const notify = (p, msg) => p ? toast.success(msg) : toast.error(msg);
 
   useEffect(() => {
     cheackAuth() ? setFlag(true) : (navigate("/"));
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const formdata = new FormData(e.target)
     const data = Object.fromEntries(formdata.entries())
-    axios.post("http://localhost:3032/admincrud/createlight", data, {
+
+    const payload = { ...data, myfile: await imageFormator(data.myfile) }
+    // console.log(payload)
+    axios.post("https://elitebackend.vercel.app/admincrud/createlight", payload, {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
       },
     }).then((res) => {
+
       notify(1, "Main light category added successfully...")
     }).catch((err) => {
-      if (err.response.status === 401) {
+      if (err?.response.status === 401) {
         navigate('/logout')
       }
       else {

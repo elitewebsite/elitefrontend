@@ -9,6 +9,15 @@ import cheackAuth from '../../Auth'
 import LogoutIcon from '../../icons/exit.png'
 
 const Mainlightcategory = () => {
+    const imageFormator = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onloadend = () => {
+                resolve(reader.result)
+            }
+        })
+    }
 
     const [flag, setFlag] = useState(false)
 
@@ -23,7 +32,7 @@ const Mainlightcategory = () => {
 
         cheackAuth() ? setFlag(true) : (navigate("/"));
 
-        axios.post("http://localhost:3032/admincrud/getlightcategoryid", { id: location.state.id }, {
+        axios.post("https://elitebackend.vercel.app/admincrud/getlightcategoryid", { id: location.state.id }, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 "Authorization": localStorage.getItem('token')
@@ -41,31 +50,39 @@ const Mainlightcategory = () => {
     }, [])
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const formdata = new FormData(e.target)
         const data = Object.fromEntries(formdata.entries())
-        formdata.append("id", location.state.id)
-        const payload = { ...data, "id": location.state.id }
+        //formdata.append("id", location.state.id)
+        if (data.myfile.size < 500000) {
+            const payload = { ...data, "id": location.state.id, myfile: await imageFormator(data.myfile) }
 
-        axios.post("http://localhost:3032/admincrud/updatelight", payload, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                "Authorization": localStorage.getItem('token')
-            },
-        }).then((res) => {
-            notify(1, "Updated successfully...")
-        }).catch((err) => {
-            if (err.response.status === 401) {
-                navigate('/logout')
-            }
-            else {
-                notify(0, "Internal server error..")
-            }
-        })
+            axios.post("https://elitebackend.vercel.app/admincrud/updatelight", payload, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": localStorage.getItem('token')
+                },
+            }).then((res) => {
+                console.log(res)
+                notify(1, "Updated successfully...")
+            }).catch((err) => {
+                console.log(err)
+                if (err.response.status === 401) {
+                    navigate('/logout')
+                }
+                else {
+                    notify(0, "Internal server error..")
+                }
+            })
 
-        e.target.name.value = "";
-        e.target.myfile.value = "";
+            e.target.name.value = "";
+            e.target.myfile.value = "";
+        }
+        else {
+            window.alert("file size should be less than 500kb and should be in given format..")
+        }
+
     }
 
     return (

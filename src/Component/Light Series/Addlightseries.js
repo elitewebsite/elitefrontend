@@ -8,18 +8,24 @@ import cheackAuth from '../../Auth'
 import LogoutIcon from '../../icons/exit.png'
 
 const Addlightseries = () => {
+  const imageFormator = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onloadend = () => {
+        resolve(reader.result)
+      }
+    })
+  }
+
   const [flag, setFlag] = useState(false)
-
   const navigate = useNavigate();
-
   const notify = (p, msg) => p ? toast.success(msg) : toast.error(msg);
-
   const [category, setCategory] = useState([])
-
   useEffect(() => {
     cheackAuth() ? setFlag(true) : (navigate("/"));
 
-    axios.get("http://localhost:3032/admincrud/getlightcategory", {
+    axios.get("https://elitebackend.vercel.app/admincrud/getlightcategory", {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
@@ -36,32 +42,37 @@ const Addlightseries = () => {
     })
   }, [])
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     const formdata = new FormData(event.target)
     const data = Object.fromEntries(formdata.entries())
+    if (data.myfile.size < 500000) {
+      const payload = { ...data, myfile: await imageFormator(data.myfile) }
+      axios.post('https://elitebackend.vercel.app/admincrud/createseries', payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": localStorage.getItem('token')
+        },
+      }).then((res) => {
+        notify(1, "Series Added Successfully..")
+      }).catch((err) => {
+        if (err.response.status === 401) {
+          navigate('/logout')
+        }
+        else {
+          notify(0, "Internal server error..")
+        }
+      })
 
-    axios.post('http://localhost:3032/admincrud/createseries', data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        "Authorization": localStorage.getItem('token')
-      },
-    }).then((res) => {
-      notify(1, "Series Added Successfully..")
-    }).catch((err) => {
-      if (err.response.status === 401) {
-        navigate('/logout')
-      }
-      else {
-        notify(0, "Internal server error..")
-      }
-    })
+      event.target.mainLight.value = ""
+      event.target.series.value = ""
+      event.target.myfile.value = ""
+    }
+    else {
+      window.alert("file size should be less than 500kb and should be in given format..")
 
-    event.target.mainLight.value = ""
-    event.target.series.value = ""
-    event.target.myfile.value = ""
+    }
   }
-
   return (
     <>
       {

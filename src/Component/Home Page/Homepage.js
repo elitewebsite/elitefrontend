@@ -9,6 +9,15 @@ import LogoutIcon from '../../icons/exit.png'
 
 const Homepage = () => {
 
+    const imageFormator = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onloadend = () => {
+                resolve(reader.result)
+            }
+        })
+    }
     const [flag, setFlag] = useState(false)
     const [loading, setLoading] = useState(false)
 
@@ -20,20 +29,23 @@ const Homepage = () => {
         cheackAuth() ? setFlag(true) : (navigate("/"));
     }, [navigate])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const formdata = new FormData(e.target);
         const data = Object.fromEntries(formdata.entries())
         if (data.file1.size < 500000 && data.file2.size < 500000 && data.file3.size < 500000 && data.file1.size < 500000) {
-            axios.post("http://localhost:3032/homedynamic/updatehomepage", data, {
+            const payload = { ...data, file1: await imageFormator(data.file1), file2: await imageFormator(data.file2), file3: await imageFormator(data.file3), file4: await imageFormator(data.file4) }
+
+            axios.post("https://elitebackend.vercel.app/homedynamic/updatehomepage", payload, {
                 headers: {
                     "Content-Type": "multipart/form-data",
+                    "Authorization": localStorage.getItem('token')
                 },
             }).then((res) => {
-
                 notify(1, "Home Page Updated Successfully..")
                 setLoading(false)
             }).catch((err) => {
+
                 if (err.response.status === 401) {
                     navigate('/logout')
                 }
@@ -42,7 +54,6 @@ const Homepage = () => {
                     setLoading(false)
                 }
             })
-
             e.target.carousel1title.value = "";
             e.target.file1.value = "";
             e.target.carousel2title.value = "";
@@ -58,8 +69,6 @@ const Homepage = () => {
             window.alert("file size should be less than 500kb and should be in given format..")
             setLoading(false)
         }
-
-
 
     }
 

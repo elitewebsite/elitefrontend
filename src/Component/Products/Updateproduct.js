@@ -12,7 +12,15 @@ import LogoutIcon from '../../icons/exit.png'
 
 const Updateproduct = () => {
     const location = useLocation()
-
+    const imageFormator = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onloadend = () => {
+                resolve(reader.result)
+            }
+        })
+    }
     const [flag, setFlag] = useState(false);
     const navigate = useNavigate();
 
@@ -37,7 +45,7 @@ const Updateproduct = () => {
 
 
     useEffect(() => {
-        axios.post("http://localhost:3032/admincrud/getproductbyid", { id: location.state.id }, {
+        axios.post("https://elitebackend.vercel.app/admincrud/getproductbyid", { id: location.state.id }, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 "Authorization": localStorage.getItem('token')
@@ -59,27 +67,24 @@ const Updateproduct = () => {
     }, [location.state.id])
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         // Sending data request to backend 
         e.preventDefault();
         const formdata = new FormData(e.target)
         const data = Object.fromEntries(formdata.entries())
         setLoading(true)
         // Whatever data received from dynamic inputs for light parameters + all form data received after submit. we are send as payload
+        const payload = { ...data, 'info': JSON.stringify(value), 'id': location.state.id, file1: await imageFormator(data.file1), file2: await imageFormator(data.file2), file3: await imageFormator(data.file3), file4: await imageFormator(data.file4), pdffile: await imageFormator(data.pdffile) }
+        if (data.file1.size < 500000 && data.file2.size < 500000 && data.file3.size < 500000 && data.file4.size < 500000 && data.pdffile.size < 500000 && data.pdffile.type === "application/pdf") {
 
-        const payload = { ...data, 'info': JSON.stringify(value), 'id': location.state.id }
-        console.log(payload)
-        if (payload.file1.size < 500000 && payload.file2.size < 500000 && payload.file3.size < 500000 && payload.file4.size < 500000 && payload.pdffile.size < 500000 && payload.pdffile.type === "application/pdf") {
-            axios.post('http://localhost:3032/admincrud/updateproduct', payload, {
+            axios.post('https://elitebackend.vercel.app/admincrud/updateproduct', payload, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Authorization": localStorage.getItem('token')
                 },
             }).then((res) => {
-
                 notify(1, "Product Descirption Added Successfully..")
                 setLoading(false)
-
             }).catch((err) => {
                 if (err.response.status === 401) {
                     navigate('/logout')
@@ -144,9 +149,7 @@ const Updateproduct = () => {
                                         <div className="w-full mt-4">
                                             <label htmlFor="series_name"><b>Light Series:</b> </label>
                                             <select name="series_name" id="series_name" value={prev.series_name} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300">
-
                                                 <option value={prev.series_name} >{prev.series_name}</option>
-
                                             </select>
 
                                         </div>

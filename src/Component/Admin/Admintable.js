@@ -22,7 +22,7 @@ const Admintable = () => {
 
   useEffect(() => {
     cheackAuth() ? setFlag(true) : (navigate("/"));
-    axios.get('http://localhost:3032/auth/getalluser', {
+    axios.get('https://elitebackend.vercel.app/auth/getalluser', {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
@@ -43,7 +43,7 @@ const Admintable = () => {
   const deleteAdmin = (id) => {
     const delMsg = window.confirm("Do you really want to delete ?")
     if (delMsg) {
-      axios.post('http://localhost:3032/auth/deleteuser', { id }, {
+      axios.post('https://elitebackend.vercel.app/auth/deleteuser', { id }, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": localStorage.getItem('token')

@@ -19,7 +19,7 @@ const Lightcategorytable = () => {
   useEffect(() => {
     cheackAuth() ? setFlag(true) : (navigate("/"));
 
-    axios.get('http://localhost:3032/admincrud/getlightcategory', {
+    axios.get('https://elitebackend.vercel.app/admincrud/getlightcategory', {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
@@ -40,7 +40,7 @@ const Lightcategorytable = () => {
   const deleteCategory = (id) => {
     const delMsg = window.confirm("Do you really want to delete ?")
     if (delMsg) {
-      axios.post('http://localhost:3032/admincrud/deletemainlight', { id }, {
+      axios.post('https://elitebackend.vercel.app/admincrud/deletemainlight', { id }, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": localStorage.getItem('token')

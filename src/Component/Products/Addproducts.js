@@ -3,25 +3,28 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
 import delIconWhite from '../../icons/trash.png'
 import ReactLoading from 'react-loading';
 import { Link, useNavigate } from 'react-router-dom'
-
 import cheackAuth from '../../Auth'
 import LogoutIcon from '../../icons/exit.png'
 
 const Addproducts = () => {
-
+  const imageFormator = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onloadend = () => {
+        resolve(reader.result)
+      }
+    })
+  }
   const [flag, setFlag] = useState(false);
   const navigate = useNavigate();
-
   const notify = (p, msg) => p ? toast.success(msg) : toast.error(msg);
-
   const [category, setCategory] = useState([])
   const [value, setValue] = useState([]);
   const [loading, setLoading] = useState(false)
-
   const [main, setMain] = useState({
     title: '',
     desc: '',
@@ -29,8 +32,7 @@ const Addproducts = () => {
 
   useEffect(() => {
     cheackAuth() ? setFlag(true) : (navigate("/"));
-
-    axios.get("http://localhost:3032/admincrud/getseriesname", {
+    axios.get("https://elitebackend.vercel.app/admincrud/getseriesname", {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
@@ -48,7 +50,7 @@ const Addproducts = () => {
   }, [])
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
 
     // Sending data request to backend 
     e.preventDefault();
@@ -60,12 +62,9 @@ const Addproducts = () => {
 
     //Whatever data received from dynamic inputs for light parameters + all form data received after submit. we are send as payload
     //pasreing object to jaons string   
-    const payload = { ...data, 'info': JSON.stringify(value) }
-    //console.log(...data)
-
-    if (payload.file1.size < 500000 && payload.file2.size < 500000 && payload.file3.size < 500000 && payload.file4.size < 500000 && payload.pdffile.size < 500000 && payload.pdffile.type === "application/pdf") {
-
-      axios.post('http://localhost:3032/admincrud/addproduct', payload, {
+    if (data.file1.size < 500000 && data.file2.size < 500000 && data.file3.size < 500000 && data.file4.size < 500000 && data.pdffile.size < 500000 && data.pdffile.type === "application/pdf") {
+      const payload = { ...data, 'info': JSON.stringify(value), file1: await imageFormator(data.file1), file2: await imageFormator(data.file2), file3: await imageFormator(data.file3), file4: await imageFormator(data.file4), pdffile: await imageFormator(data.pdffile) }
+      axios.post('https://elitebackend.vercel.app/admincrud/addproduct', payload, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": localStorage.getItem('token')
@@ -101,7 +100,6 @@ const Addproducts = () => {
       window.alert("file size should be less than 500kb and should be in given format..")
       setLoading(false)
     }
-
 
   }
 

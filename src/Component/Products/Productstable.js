@@ -24,7 +24,7 @@ const Productstable = () => {
 
     cheackAuth() ? setFlag(true) : (navigate("/"));
 
-    axios.get('http://localhost:3032/admincrud/getallproducts',{
+    axios.get('https://elitebackend.vercel.app/admincrud/getallproducts',{
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
@@ -44,7 +44,7 @@ const Productstable = () => {
   const deleteProduct = (id, series) => {
     const delMsg = window.confirm("Do you really want to delete ?")
     if (delMsg) {
-      axios.post('http://localhost:3032/admincrud/deleteproduct', { id, series },{
+      axios.post('https://elitebackend.vercel.app/admincrud/deleteproduct', { id, series },{
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": localStorage.getItem('token')

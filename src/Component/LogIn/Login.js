@@ -17,7 +17,7 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (data.email !== '' && data.password !== '') {
-      axios.post('http://localhost:3032/auth/login', data).then((res) => {
+      axios.post('https://elitebackend.vercel.app/auth/login', data).then((res) => {
         localStorage.setItem('token', res.data.token)
         navigate(0);
       }).catch((err) => {
@@ -40,7 +40,7 @@ const Login = () => {
             :
             ('')
         }
-        <h1 className="text-3xl font-semibold text-center text-gray-700 dark:text-white">New Elite Electricals</h1>
+        <h1 className="text-3xl font-semibold text-center text-gray-700 dark:text-white">Elite Electricals</h1>
 
         <div className="flex items-center justify-between mt-4">
           <span className="w-1/5 border-b dark:border-gray-600 lg:w-1/5"></span>

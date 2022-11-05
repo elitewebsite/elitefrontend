@@ -22,10 +22,10 @@ const Createadmin = () => {
     const formdata = new FormData(event.target)
     const data = Object.fromEntries(formdata.entries())
 
-    axios.post('http://localhost:3032/auth/newuser', data, {
+    axios.post('https://elitebackend.vercel.app/auth/newuser', data, {
       headers: {
         "Content-Type": "multipart/form-data",
-        "Authorization":localStorage.getItem('token')
+        "Authorization": localStorage.getItem('token')
       },
     }).then((res) => {
       notify(1, "Admin Created Successfully..")
@@ -33,10 +33,10 @@ const Createadmin = () => {
       if (err.response.status === 401) {
         navigate('/logout')
       }
-      else{
+      else {
         notify(0, "Internal server error..")
       }
-      
+
     })
 
     event.target.email.value = "";
