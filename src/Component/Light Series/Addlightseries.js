@@ -25,7 +25,7 @@ const Addlightseries = () => {
   useEffect(() => {
     cheackAuth() ? setFlag(true) : (navigate("/"));
 
-    axios.get("http://localhost:3032/admincrud/getlightcategory", {
+    axios.get("https://elitebackend-sage.vercel.app/admincrud/getlightcategory", {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
@@ -48,7 +48,7 @@ const Addlightseries = () => {
     const data = Object.fromEntries(formdata.entries())
     if (data.myfile.size < 500000) {
       const payload = { ...data, myfile: await imageFormator(data.myfile) }
-      axios.post('http://localhost:3032/admincrud/createseries', payload, {
+      axios.post('https://elitebackend-sage.vercel.app/admincrud/createseries', payload, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": localStorage.getItem('token')

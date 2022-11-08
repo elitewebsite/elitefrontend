@@ -32,7 +32,7 @@ const Addproducts = () => {
 
   useEffect(() => {
     cheackAuth() ? setFlag(true) : (navigate("/"));
-    axios.get("http://localhost:3032/admincrud/getseriesname", {
+    axios.get("https://elitebackend-sage.vercel.app/admincrud/getseriesname", {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
@@ -64,7 +64,7 @@ const Addproducts = () => {
     //pasreing object to jaons string   
     if (data.file1.size < 500000 && data.file2.size < 500000 && data.file3.size < 500000 && data.file4.size < 500000 && data.pdffile.size < 500000 && data.pdffile.type === "application/pdf") {
       const payload = { ...data, 'info': JSON.stringify(value), file1: await imageFormator(data.file1), file2: await imageFormator(data.file2), file3: await imageFormator(data.file3), file4: await imageFormator(data.file4), pdffile: await imageFormator(data.pdffile) }
-      axios.post('https://elitebackend.vercel.app/admincrud/addproduct', payload, {
+      axios.post('https://elitebackend-sage.vercel.app/admincrud/addproduct', payload, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": localStorage.getItem('token')

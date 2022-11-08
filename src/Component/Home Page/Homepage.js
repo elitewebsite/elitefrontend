@@ -36,7 +36,7 @@ const Homepage = () => {
         if (data.file1.size < 500000 && data.file2.size < 500000 && data.file3.size < 500000 && data.file1.size < 500000) {
             const payload = { ...data, file1: await imageFormator(data.file1), file2: await imageFormator(data.file2), file3: await imageFormator(data.file3), file4: await imageFormator(data.file4) }
 
-            axios.post("http://localhost:3032/homedynamic/updatehomepage", payload, {
+            axios.post("https://elitebackend-sage.vercel.app/homedynamic/updatehomepage", payload, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Authorization": localStorage.getItem('token')

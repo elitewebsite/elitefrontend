@@ -45,7 +45,7 @@ const Updateproduct = () => {
 
 
     useEffect(() => {
-        axios.post("http://localhost:3032/admincrud/getproductbyid", { id: location.state.id }, {
+        axios.post("https://elitebackend-sage.vercel.app/admincrud/getproductbyid", { id: location.state.id }, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 "Authorization": localStorage.getItem('token')
@@ -77,7 +77,7 @@ const Updateproduct = () => {
         const payload = { ...data, 'info': JSON.stringify(value), 'id': location.state.id, file1: await imageFormator(data.file1), file2: await imageFormator(data.file2), file3: await imageFormator(data.file3), file4: await imageFormator(data.file4), pdffile: await imageFormator(data.pdffile) }
         if (data.file1.size < 500000 && data.file2.size < 500000 && data.file3.size < 500000 && data.file4.size < 500000 && data.pdffile.size < 500000 && data.pdffile.type === "application/pdf") {
 
-            axios.post('http://localhost:3032/admincrud/updateproduct', payload, {
+            axios.post('https://elitebackend-sage.vercel.app/admincrud/updateproduct', payload, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Authorization": localStorage.getItem('token')

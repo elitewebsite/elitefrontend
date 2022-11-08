@@ -24,7 +24,7 @@ const Seriestable = () => {
   useEffect(() => {
     cheackAuth() ? setFlag(true) : (navigate("/"));
 
-    axios.get('http://localhost:3032/admincrud/getallseries', {
+    axios.get('https://elitebackend-sage.vercel.app/admincrud/getallseries', {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
@@ -48,7 +48,7 @@ const Seriestable = () => {
     const delMsg = window.confirm('All products under series will be deleted..! Do you really want to delete Series??')
     //window.alert(id)
     if (delMsg) {
-      axios.post('http://localhost:3032/admincrud/deleteseries', { id, series }, {
+      axios.post('https://elitebackend-sage.vercel.app/admincrud/deleteseries', { id, series }, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": localStorage.getItem('token')

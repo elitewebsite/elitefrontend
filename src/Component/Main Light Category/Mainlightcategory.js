@@ -33,7 +33,7 @@ const Mainlightcategory = () => {
 
     const payload = { ...data, myfile: await imageFormator(data.myfile) }
     // console.log(payload)
-    axios.post("http://localhost:3032/admincrud/createlight", payload, {
+    axios.post("https://elitebackend-sage.vercel.app/admincrud/createlight", payload, {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
