@@ -44,7 +44,7 @@ const Productstable = () => {
   const deleteProduct = (id, series) => {
     const delMsg = window.confirm("Do you really want to delete ?")
     if (delMsg) {
-      axios.post('https://elitebackend.vercel.app/admincrud/deleteproduct', { id, series },{
+      axios.post('http://localhost:3032/admincrud/deleteproduct', { id, series },{
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": localStorage.getItem('token')

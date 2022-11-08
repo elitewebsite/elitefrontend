@@ -32,7 +32,7 @@ const Mainlightcategory = () => {
 
         cheackAuth() ? setFlag(true) : (navigate("/"));
 
-        axios.post("https://elitebackend.vercel.app/admincrud/getlightcategoryid", { id: location.state.id }, {
+        axios.post("http://localhost:3032/admincrud/getlightcategoryid", { id: location.state.id }, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 "Authorization": localStorage.getItem('token')
@@ -58,7 +58,7 @@ const Mainlightcategory = () => {
         if (data.myfile.size < 500000) {
             const payload = { ...data, "id": location.state.id, myfile: await imageFormator(data.myfile) }
 
-            axios.post("https://elitebackend.vercel.app/admincrud/updatelight", payload, {
+            axios.post("http://localhost:3032/admincrud/updatelight", payload, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Authorization": localStorage.getItem('token')

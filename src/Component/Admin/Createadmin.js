@@ -22,7 +22,7 @@ const Createadmin = () => {
     const formdata = new FormData(event.target)
     const data = Object.fromEntries(formdata.entries())
 
-    axios.post('https://elitebackend.vercel.app/auth/newuser', data, {
+    axios.post('http://localhost:3032/auth/newuser', data, {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')

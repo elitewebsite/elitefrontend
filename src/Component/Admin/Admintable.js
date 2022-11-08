@@ -22,7 +22,7 @@ const Admintable = () => {
 
   useEffect(() => {
     cheackAuth() ? setFlag(true) : (navigate("/"));
-    axios.get('https://elitebackend.vercel.app/auth/getalluser', {
+    axios.get('http://localhost:3032/auth/getalluser', {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
@@ -41,26 +41,32 @@ const Admintable = () => {
 
   }, [status])
   const deleteAdmin = (id) => {
-    const delMsg = window.confirm("Do you really want to delete ?")
-    if (delMsg) {
-      axios.post('https://elitebackend.vercel.app/auth/deleteuser', { id }, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "Authorization": localStorage.getItem('token')
-        },
-      }).then((res) => {
-        notify(1, "Admin Deleted Succesfully..!")
-        setStatus(!status)
+    if (id !== '63698aa11ca169dcd5a211f0') {
+      const delMsg = window.confirm("Do you really want to delete ?")
+      if (delMsg) {
+        axios.post('http://localhost:3032/auth/deleteuser', { id }, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "Authorization": localStorage.getItem('token')
+          },
+        }).then((res) => {
+          notify(1, "Admin Deleted Succesfully..!")
+          setStatus(!status)
 
-      }).catch((err) => {
-        if (err.response.status === 401) {
-          navigate('/logout')
-        }
-        else {
-          notify(0, "Internal server error..")
-        }
-      })
+        }).catch((err) => {
+          if (err.response.status === 401) {
+            navigate('/logout')
+          }
+          else {
+            notify(0, "Internal server error..")
+          }
+        })
+      }
     }
+    else {
+      window.alert("you can not delete root user..")
+    }
+
 
   }
 

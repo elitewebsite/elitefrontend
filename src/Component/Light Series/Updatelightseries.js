@@ -27,7 +27,7 @@ const Updatelightseries = () => {
     useEffect(() => {
         cheackAuth() ? setFlag(true) : (navigate("/"));
         //This API will fetch already added series which we want to update now
-        axios.post("https://elitebackend.vercel.app/admincrud/getseriesbyid", { id: location.state.id }, {
+        axios.post("http://localhost:3032/admincrud/getseriesbyid", { id: location.state.id }, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 "Authorization": localStorage.getItem('token')
@@ -44,7 +44,7 @@ const Updatelightseries = () => {
         });
 
         //This API will give main light categories which will be displayed in dropdown
-        axios.get("https://elitebackend.vercel.app/admincrud/getlightcategory", {
+        axios.get("http://localhost:3032/admincrud/getlightcategory", {
             headers: {
                 "Content-Type": "multipart/form-data",
                 "Authorization": localStorage.getItem('token')
@@ -69,7 +69,7 @@ const Updatelightseries = () => {
         if (data.myfile.size < 500000) {
             const payload = { ...data, "id": location.state.id, myfile: await imageFormator(data.myfile) }
 
-            axios.post("https://elitebackend.vercel.app/admincrud/updateseries", payload, {
+            axios.post("http://localhost:3032/admincrud/updateseries", payload, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Authorization": localStorage.getItem('token')

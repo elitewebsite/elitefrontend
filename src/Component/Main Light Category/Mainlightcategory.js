@@ -33,7 +33,7 @@ const Mainlightcategory = () => {
 
     const payload = { ...data, myfile: await imageFormator(data.myfile) }
     // console.log(payload)
-    axios.post("https://elitebackend.vercel.app/admincrud/createlight", payload, {
+    axios.post("http://localhost:3032/admincrud/createlight", payload, {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
@@ -42,6 +42,7 @@ const Mainlightcategory = () => {
 
       notify(1, "Main light category added successfully...")
     }).catch((err) => {
+      console.log(err)
       if (err?.response.status === 401) {
         navigate('/logout')
       }

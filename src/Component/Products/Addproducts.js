@@ -32,7 +32,7 @@ const Addproducts = () => {
 
   useEffect(() => {
     cheackAuth() ? setFlag(true) : (navigate("/"));
-    axios.get("https://elitebackend.vercel.app/admincrud/getseriesname", {
+    axios.get("http://localhost:3032/admincrud/getseriesname", {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": localStorage.getItem('token')
@@ -183,22 +183,22 @@ const Addproducts = () => {
 
                     <div className="w-full mt-4">
                       <label htmlFor="product_description"><b>Product Description:</b></label>
-                      <textarea name='product_description' placeholder="Product Description" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
+                      <textarea name='product_description' placeholder="Product Description" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" />
                     </div>
 
                     <div className="w-full mt-4">
                       <label htmlFor="pdffile"><b>Downloadable pdf Data:</b></label>
-                      <input type="file" name='pdffile' placeholder="PDF" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
+                      <input type="file" name='pdffile' placeholder="PDF" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required/>
                     </div>
 
                     <div className="w-full mt-4">
                       <label htmlFor="youtube"><b>YouTube Video Link:</b></label>
-                      <input type="text" name='youtube' placeholder="YouTube Video Link" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
+                      <input type="text" name='youtube' placeholder="YouTube Video Link" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" />
                     </div>
 
                     <div className="w-full mt-4">
                       <label htmlFor="news"><b>News Data:</b></label>
-                      <textarea name='news' placeholder="News Content" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" required />
+                      <textarea name='news' placeholder="News Content" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" />
                     </div>
 
                     <h1 className=" mt-12 mb-4 text-lg"> <b> Add Product Parameters</b></h1>

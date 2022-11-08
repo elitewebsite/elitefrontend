@@ -17,7 +17,7 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (data.email !== '' && data.password !== '') {
-      axios.post('https://elitebackend.vercel.app/auth/login', data).then((res) => {
+      axios.post('http://localhost:3032/auth/login', data).then((res) => {
         localStorage.setItem('token', res.data.token)
         navigate(0);
       }).catch((err) => {
