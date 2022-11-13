@@ -42,10 +42,11 @@ const Homepage = () => {
                     "Authorization": localStorage.getItem('token')
                 },
             }).then((res) => {
+                console.log(res)
                 notify(1, "Home Page Updated Successfully..")
                 setLoading(false)
             }).catch((err) => {
-
+                console.log(err)
                 if (err.response.status === 401) {
                     navigate('/logout')
                 }
