@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom'
 import cheackAuth from '../../Auth'
 import LogoutIcon from '../../icons/exit.png'
+import Sidebars from '../Sidebar';
 
 const Mainlightcategory = () => {
     const imageFormator = (file) => {
@@ -89,35 +90,40 @@ const Mainlightcategory = () => {
         <>
             {
                 flag ?
-                    (<div className='admin w-3/4'>
-                        <div className="logout absolute right-2 top-2" >
-                            <Link to="/logout">  <img src={LogoutIcon} alt="Image" /></Link>
-                        </div>
-                        <ToastContainer position="bottom-left" hideProgressBar="true" autoClose="6000" />
-                        <div className="form mt-32">
-                            <div className="w-full px-10 overflow-hidden bg-white rounded-lg border-2 shadow-lg dark:bg-gray-800">
-                                <div className="px-6 py-4">
-                                    <p className="mt-1 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold border-b-2 p-y-2 border-indigo-800 w-1/2 m-auto">Update Main Light Categoory</p>
+                    (
+                        <>
+                            <Sidebars />
+                            <div className='admin w-3/4'>
+                                <div className="logout absolute right-2 top-2" >
+                                    <Link to="/logout">  <img src={LogoutIcon} alt="Image" /></Link>
+                                </div>
+                                <ToastContainer position="bottom-left" hideProgressBar="true" autoClose="6000" />
+                                <div className="form mt-32">
+                                    <div className="w-full px-10 overflow-hidden bg-white rounded-lg border-2 shadow-lg dark:bg-gray-800">
+                                        <div className="px-6 py-4">
+                                            <p className="mt-1 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold border-b-2 p-y-2 border-indigo-800 w-1/2 m-auto">Update Main Light Categoory</p>
 
-                                    <form onSubmit={handleSubmit} autoComplete="off">
-                                        <div className="w-full mt-5">
-                                            <label htmlFor="name">Main Light Category Name</label>
-                                            <input type="text" name="name" value={prev.name} onChange={(e) => { setPrev({ name: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" aria-label="Email Address" />
-                                        </div>
+                                            <form onSubmit={handleSubmit} autoComplete="off">
+                                                <div className="w-full mt-5">
+                                                    <label htmlFor="name">Main Light Category Name</label>
+                                                    <input type="text" name="name" value={prev.name} onChange={(e) => { setPrev({ name: e.target.value }) }} className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" aria-label="Email Address" />
+                                                </div>
 
-                                        <div className="w-full mt-5">
-                                            <label htmlFor="myfile">Upload Image</label>
-                                            <input type="file" name="myfile" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" aria-label="Password" />
-                                        </div>
+                                                <div className="w-full mt-5">
+                                                    <label htmlFor="myfile">Upload Image</label>
+                                                    <input type="file" name="myfile" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" aria-label="Password" />
+                                                </div>
 
-                                        <div className="flex items-center justify-between mt-6">
-                                            <button type="submit" className="px-4 py-2 leading-5 text-white transition-colors duration-300 transform bg-blue-700 rounded hover:bg-blue-600 focus:outline-none">Submit</button>
+                                                <div className="flex items-center justify-between mt-6">
+                                                    <button type="submit" className="px-4 py-2 leading-5 text-white transition-colors duration-300 transform bg-blue-700 rounded hover:bg-blue-600 focus:outline-none">Submit</button>
+                                                </div>
+                                            </form>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>)
+                        </>
+                    )
                     :
                     ('')
             }

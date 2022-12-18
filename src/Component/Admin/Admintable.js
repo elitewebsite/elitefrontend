@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import cheackAuth from '../../Auth'
 
 import LogoutIcon from '../../icons/exit.png'
+import Sidebars from '../Sidebar';
 
 const Admintable = () => {
   const [flag, setFlag] = useState(false)
@@ -18,7 +19,7 @@ const Admintable = () => {
 
   const notify = (p, msg) => p ? toast.success(msg) : toast.error(msg);
   const [status, setStatus] = useState(false)
-
+  const [valid, setValid] = useState(true)
 
   useEffect(() => {
     cheackAuth() ? setFlag(true) : (navigate("/"));
@@ -34,12 +35,13 @@ const Admintable = () => {
       if (err.response.status === 401) {
         navigate('/logout')
       } else {
-        notify(0, "Internal server error..")
+        setValid(!valid)
+        //notify(0, "sorry only root user can view details")
       }
     })
 
-
   }, [status])
+
   const deleteAdmin = (id) => {
     if (id !== '63698aa11ca169dcd5a211f0') {
       const delMsg = window.confirm("Do you really want to delete ?")
@@ -58,7 +60,7 @@ const Admintable = () => {
             navigate('/logout')
           }
           else {
-            notify(0, "Internal server error..")
+            notify(0, "sorry only root user can delete user details")
           }
         })
       }
@@ -73,70 +75,84 @@ const Admintable = () => {
   return (
     <>
       {
-        flag ? (<div className='admin w-3/4 mt-12 px-2'>
-          <div className="logout absolute right-2 top-2" >
-            <Link to="/logout">  <img src={LogoutIcon} alt="Image" /></Link>
-          </div>
-          <ToastContainer position="bottom-left" hideProgressBar="true" autoClose="6000" />
-          <div className="overflow-x-auto relative shadow-md sm:rounded-lg order-2">
-            <p className="mt-1 mb-3 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold border-b-2 p-y-2 border-indigo-800 w-1/2 m-auto">Active Admins</p>
+        flag ?
+          (
+            <>
+              <Sidebars />
+              <div className='admin w-3/4 mt-12 px-2'>
+                <div className="logout absolute right-2 top-2" >
+                  <Link to="/logout">  <img src={LogoutIcon} alt="Image" /></Link>
+                </div>
+                <ToastContainer position="bottom-left" hideProgressBar="true" autoClose="6000" />
+                <div className="overflow-x-auto relative shadow-md sm:rounded-lg order-2">
 
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-2">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="py-3 px-6">
-                    sr.no.
-                  </th>
-                  <th scope="col" className="py-3 px-6">
-                    User Id
-                  </th>
-                  <th scope="col" className="py-3 px-6">
-                    Username
-                  </th>
-                  <th scope="col" className="py-3 px-6">
-                    passworrd
-                  </th>
-                  <th scope="col" className="py-3 px-6">
-                    Delete
-                  </th>
+                  {
+                    valid ? (
+                      <div className="add_btn mt-6 mb-6 flex justify-end mr-4">
+                        <Link to="/createadmin" className='p-3 rounded-md font-bold bg-blue-600 text-white'>Create New Admin</Link>
+                      </div>
+                    ) : ('')
+                  }
 
-                </tr>
-              </thead>
+                  {
+                    valid ? (
+                      <>
+                        <p className="mt-1 mb-3 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold w-1/2 m-auto">Active Admins</p>
+                        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-2">
+                          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                              <th scope="col" className="py-3 px-6">
+                                sr.no.
+                              </th>
 
-              <tbody>
-                {data.map((value, index) => {
-                  return (<tr key={index} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                    <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {index + 1}
-                    </th>
-                    <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {value._id}
-                    </th>
+                              <th scope="col" className="py-3 px-6">
+                                Username
+                              </th>
+                              <th scope="col" className="py-3 px-6">
+                                passworrd
+                              </th>
+                              <th scope="col" className="py-3 px-6">
+                                Delete
+                              </th>
 
-                    <td className="py-4 px-6">
-                      {value.email}
-                    </td>
+                            </tr>
+                          </thead>
 
-                    <td className="py-4 px-6">
-                      {value.password}
-                    </td>
+                          <tbody>
+                            {data.map((value, index) => {
+                              return (<tr key={index} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                  {index + 1}
+                                </th>
+                                <td className="py-4 px-6">
+                                  {value.email}
+                                </td>
 
-                    <td className="py-4 px-6">
-                      <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                        <img src={delIcon} alt="Image" onClick={() => {
-                          deleteAdmin(value._id)
-                        }} />
-                      </a>
-                    </td>
+                                <td className="py-4 px-6">
+                                  {value.password}
+                                </td>
+
+                                <td className="py-4 px-6">
+                                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                    <img src={delIcon} alt="Image" onClick={() => {
+                                      deleteAdmin(value._id)
+                                    }} />
+                                  </a>
+                                </td>
 
 
-                  </tr>)
-                })}
+                              </tr>)
+                            })}
 
-              </tbody>
-            </table>
-          </div>
-        </div>) : ('')
+                          </tbody>
+                        </table>
+                      </>
+                    ) : (<p className='text-2xl m-4 font-bold text-center text-red-300 '>Only Master-Admin can access this credentials...!</p>)
+                  }
+                </div>
+              </div>
+            </>
+          ) : ('')
       }
 
     </>

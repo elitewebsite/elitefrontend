@@ -20,14 +20,30 @@ import Productstable from './Component/Products/Productstable';
 import Updateproduct from "./Component/Products/Updateproduct";
 import Login from './Component/LogIn/Login'
 import Logout from './Component/LogIn/Logout'
+import Userqueries from './Component/Queries/Userqueries';
+import Branches from './Component/Dynamic Branches/Branches';
+import BranchesDetails from './Component/Dynamic Branches/BranchesDetails';
+import Updatebranchdetails from './Component/Dynamic Branches/Updatebranchdetails';
+import GalleryPage from './Component/Gallery/GalleryPage';
+import GalleryTable from './Component/Gallery/GalleryTable';
+import Productorder from './Component/Changeorder/Productorder';
+import FeaturedPage from './Component/Featured Products/FeaturedPage';
+import FeaturedProductsTable from './Component/Featured Products/FeaturedProductsTable';
+import Mainpage from './Mainpage';
+import cheackAuth from './Auth';
+
+//userQueries
+
 function App() {
   return (
     <div className="App flex">
 
       <BrowserRouter>
-        <Sidebars />
+        {/* <Sidebars /> */}
+
         <Routes>
           <Route path="/" index element={<Dashboard />} />
+          {/* <Route path="/login" element={<Login />} /> */}
           <Route path='/createadmin' element={<Createadmin />} />
           <Route path='/admintable' element={<Admintable />} />
           <Route path='/mainlight' element={<Mainlightcategory />} />
@@ -42,11 +58,19 @@ function App() {
           <Route path='/updateproduct' element={<Updateproduct />} />
           <Route path='/login' element={<Login />} />
           <Route path='/logout' element={<Logout />} />
+          <Route path='/queries' element={<Userqueries />} />
+          <Route path='/branches' element={<Branches />} />
+          <Route path='/branchesdetails' element={<BranchesDetails />} />
+          <Route path='/updatebranch' element={<Updatebranchdetails />} />
+          <Route path='/gallerypage' element={<GalleryPage />} />
+          <Route path='/gallerytable' element={<GalleryTable />} />
+          <Route path='/productorder' element={<Productorder />} />
+          <Route path='/featuredproducts' element={<FeaturedPage />} />
+          <Route path='/featuredproductstable' element={<FeaturedProductsTable />} />
         </Routes>
-
       </BrowserRouter>
 
-    </div>
+    </div >
   );
 }
 export default App;

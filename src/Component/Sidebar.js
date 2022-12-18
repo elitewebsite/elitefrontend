@@ -1,21 +1,17 @@
 import React, { useState } from 'react'
 import adminImg from '../icons/admin.png'
-import tableImg from '../icons/table.png'
 import categoryImg from '../icons/categories.png'
-import eliteLogo from '../icons/elite_logo.webp'
+import eliteLogo from '../../src/icons/elite_black_logo.png'
 import { Link } from 'react-router-dom'
 import cheackAuth from '../Auth'
 
-
 const Sidebars = () => {
-
-
     return (
         <>
 
             <div className="flex flex-col w-1/4 h-screen py-8 bg-white border-r dark:bg-gray-900 dark:border-gray-700">
-                <div className="flex flex-col justify-between flex-1 mt-6">
-                    <img src={eliteLogo} alt="Image" className='bg-black h-24 w-48 m-auto rounded-lg p-2 mb-2' />
+                <div className="flex flex-col justify-between flex-1 ">
+                    <img src={eliteLogo} alt="Image" className=' h-20 w-44 m-auto rounded-lg p-2 mb-2' />
                     <nav className='p-2 flex flex-col gap-4'>
                         <span className="flex items-center px-4 py-2 text-gray-700 bg-gray-100 dark:bg-gray-800 bg-gray-200 dark:text-gray-200" href="#">
                             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,59 +23,62 @@ const Sidebars = () => {
 
                         <span className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform bg-gray-200 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#">
                             <img src={adminImg} />
-                            <span className="mx-4 font-medium"><Link to="/createadmin">Create Admin</Link></span>
-                        </span>
-
-                        <span className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform bg-gray-200 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#">
-                            <img src={tableImg} />
-                            <span className="mx-4 font-medium"> <Link to={cheackAuth() ? "/admintable" : "/"}>Admin Table</Link></span>
+                            <span className="mx-4 font-medium"> <Link to={cheackAuth() ? "/admintable" : "/"}>Admin Details</Link></span>
                         </span>
 
                         <span className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform bg-gray-200 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#">
                             <img src={categoryImg} />
-                            <span className="mx-4 font-medium"> <Link to="/mainlight">Add Main Light Category</Link></span>
-                        </span>
-
-                        <span className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform bg-gray-200 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#">
-                            <img src={tableImg} />
-                            <span className="mx-4 font-medium"><Link to={cheackAuth() ? "/lightcategorytable" : "/"} >Main Light Category Table</Link></span>
+                            <span className="mx-4 font-medium"><Link to={cheackAuth() ? "/lightcategorytable" : "/"} >Main Light Category Details</Link></span>
                         </span>
 
                         <span className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform bg-gray-200 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#">
                             <img src={categoryImg} />
-                            <span className="mx-4 font-medium"> <Link to={cheackAuth() ? "/addseries" : "/"}>Add Light Series</Link></span>
-                        </span>
-
-                        <span className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform bg-gray-200 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#">
-                            <img src={tableImg} />
-                            <span className="mx-4 font-medium"> <Link to={cheackAuth() ? "/seriestable" : "/"}>Light Series Table</Link></span>
+                            <span className="mx-4 font-medium"> <Link to={cheackAuth() ? "/seriestable" : "/"}>Light Series Details</Link></span>
                         </span>
 
                         <span className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform bg-gray-200 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#">
                             <img src={categoryImg} />
-                            <span className="mx-4 font-medium"> <Link to={cheackAuth() ? "/addproducts" : "/"}>Add Product</Link></span>
-                        </span>
-
-                        <span className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform bg-gray-200 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#">
-                            <img src={tableImg} />
-                            <span className="mx-4 font-medium"> <Link to={cheackAuth() ? "/productstable" : "/"}>Product Table</Link></span>
+                            <span className="mx-4 font-medium"> <Link to={cheackAuth() ? "/productstable" : "/"}>Product Details</Link></span>
                         </span>
 
                         <span className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform bg-gray-200 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#">
                             <img src={categoryImg} />
                             <span className="mx-4 font-medium">
-                                <Link to="/home">Add Home Page Details</Link>
+                                <Link to="/home">Home Page & About us details</Link>
                             </span>
                         </span>
+
+                        <span className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform bg-gray-200 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#">
+                            <img src={categoryImg} />
+                            <span className="mx-4 font-medium"> <Link to="/queries">Contact Form Data</Link></span>
+                        </span>
+
+                        <span className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform bg-gray-200 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#">
+                            <img src={categoryImg} />
+                            <span className="mx-4 font-medium">
+                                <Link to="/branchesdetails">Branch Details</Link>
+                            </span>
+                        </span>
+                        
+                        <span className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform bg-gray-200 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#">
+                            <img src={categoryImg} />
+                            <span className="mx-4 font-medium">
+                                <Link to="/gallerytable">Gallery Page Details</Link>
+                            </span>
+                        </span>
+
+                        <span className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform bg-gray-200 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-700" href="#">
+                            <img src={categoryImg} />
+                            <span className="mx-4 font-medium">
+                                <Link to="/featuredproductstable">Featured Products</Link>
+                            </span>
+                        </span>
+
                         <h1 className='mt-6 text-sm text-center '> Developed By <span href="https://muchmark.in" target="_blank">Muchmark Business Solution</span> </h1>
                     </nav>
 
                 </div>
-
             </div>
-
-
-
         </>
 
     )

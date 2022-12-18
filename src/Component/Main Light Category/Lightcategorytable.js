@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom'
 import cheackAuth from '../../Auth'
 import LogoutIcon from '../../icons/exit.png'
+import Sidebars from '../Sidebar'
 
 const Lightcategorytable = () => {
   const [flag, setFlag] = useState(false)
@@ -66,7 +67,10 @@ const Lightcategorytable = () => {
     <>
       {
         flag ?
-          (<div className='admin w-3/4 mt-12 px-2'>
+          (
+            <>
+            <Sidebars/>
+          <div className='admin w-3/4 mt-12 px-2'>
             <div className="logout absolute right-2 top-2" >
               <Link to="/logout">  <img src={LogoutIcon} alt="Image" /></Link>
             </div>
@@ -74,15 +78,17 @@ const Lightcategorytable = () => {
             <div className="overflow-x-auto relative shadow-md sm:rounded-lg order-2">
               <p className="mt-1 mb-3 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold border-b-2 p-y-2 border-indigo-800 w-1/2 m-auto">Active Main Light Categories</p>
 
+              <div className="add_btn mt-6 mb-6 flex justify-end mr-4">
+                <Link to="/mainlight" className='p-3 rounded-md font-bold bg-blue-600 text-white'>Create Main Light Category</Link>
+              </div>
+
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-2">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <th scope="col" className="py-3 px-6">
                       sr. no.
                     </th>
-                    <th scope="col" className="py-3 px-6">
-                      series id
-                    </th>
+                  
                     <th scope="col" className="py-3 px-6">
                       Main Light Image
                     </th>
@@ -104,10 +110,7 @@ const Lightcategorytable = () => {
                       <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {index + 1}
                       </th>
-                      <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {value._id}
-                      </th>
-
+                      
                       <td className="py-4 px-6">
                         {value.name}
                       </td>
@@ -136,7 +139,9 @@ const Lightcategorytable = () => {
                 </tbody>
               </table>
             </div>
-          </div>)
+          </div>
+          </>
+          )
           :
           ('')
       }
