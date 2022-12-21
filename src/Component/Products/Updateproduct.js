@@ -49,6 +49,7 @@ const Updateproduct = () => {
                 //getting only required data
                 resolve({ url: res.data.url, public_id: res.data.public_id })
             }).catch((err) => {
+                setLoading(false)
                 notify(0, "sorry error in cloudinary.")
             })
 
@@ -69,7 +70,7 @@ const Updateproduct = () => {
                 //getting only required data
                 resolve({ url: res.data.url, public_id: res.data.public_id, title: myimage.title })
             }).catch((err) => {
-              
+                setLoading(false)
                 notify(0, "sorrry error in clouidinary.")
             })
 
@@ -115,55 +116,61 @@ const Updateproduct = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formdata = new FormData(e.target)
-        const data = Object.fromEntries(formdata.entries())
-        setLoading(true)
+        if (arr.length !== 0) {
+            const formdata = new FormData(e.target)
+            const data = Object.fromEntries(formdata.entries())
+            setLoading(true)
 
-        //***********image uloading start*********//
-        const resulsetimg = arr.map(async (val, idx) => {
-            const myresult = await uploaderimg(val)
-            return myresult
-        })
-        let imageResponses = await Promise.all(resulsetimg);
-        //**************image uploading end*******//
+            //***********image uloading start*********//
+            const resulsetimg = arr.map(async (val, idx) => {
+                const myresult = await uploaderimg(val)
+                return myresult
+            })
+            let imageResponses = await Promise.all(resulsetimg);
+            //**************image uploading end*******//
 
-        //***********pdf uloading start ****//
-        const resulsetpdf = pdfBucket.map(async (val, idx) => {
-            const myresult = await uploaderpdf(val)
-            return myresult
-        })
-        let pdfResponses = await Promise.all(resulsetpdf);
-       
-        //**************pdf uploading end/*********/
-        // Whatever data received from dynamic inputs for light parameters + all form data received after submit. we are send as payload
-        const payload = { ...data, info: JSON.stringify(value), id: location.state.id, images: JSON.stringify(imageResponses), pdffile: JSON.stringify(pdfResponses), youtube: JSON.stringify(linkbucket), news: JSON.stringify(addnewsdata) }
+            //***********pdf uloading start ****//
+            const resulsetpdf = pdfBucket.map(async (val, idx) => {
+                const myresult = await uploaderpdf(val)
+                return myresult
+            })
+            let pdfResponses = await Promise.all(resulsetpdf);
 
-        axios.post('https://elitebackend-sage.vercel.app/admincrud/updateproduct', payload, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                "Authorization": localStorage.getItem('token')
-            },
-        }).then((res) => {
-            notify(1, "Product Descirption Added Successfully..")
-            setLoading(false)
-        }).catch((err) => {
-            if (err.response.status === 401) {
-                navigate('/logout')
-            }
-            else {
-                notify(0, "Internal server error..")
+            //**************pdf uploading end/*********/
+            // Whatever data received from dynamic inputs for light parameters + all form data received after submit. we are send as payload
+            const payload = { ...data, info: JSON.stringify(value), id: location.state.id, images: JSON.stringify(imageResponses), pdffile: JSON.stringify(pdfResponses), youtube: JSON.stringify(linkbucket), news: JSON.stringify(addnewsdata) }
+
+            axios.post('https://elitebackend-sage.vercel.app/admincrud/updateproduct', payload, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": localStorage.getItem('token')
+                },
+            }).then((res) => {
+                notify(1, "Product Descirption Upldated Successfully..")
                 setLoading(false)
-            }
-        })
+            }).catch((err) => {
+                if (err.response.status === 401) {
+                    navigate('/logout')
+                }
+                else {
+                    notify(0, "Internal server error..")
+                    setLoading(false)
+                }
+            })
 
-        e.target.series_name.value = ""
-        e.target.product_name.value = ""
-        e.target.model_no.value = ""
-        e.target.product_description.value = ""
-        e.target.youtube.value = ""
-        e.target.news.value = ""
-        e.target.pdffile.value = ""
-        setValue([])
+            e.target.series_name.value = ""
+            e.target.product_name.value = ""
+            e.target.model_no.value = ""
+            e.target.product_description.value = ""
+            e.target.youtube.value = ""
+            e.target.news.value = ""
+            e.target.pdffile.value = ""
+            setValue([])
+        }
+        else {
+            window.alert("please choose atleast one image")
+        }
+
 
     }
     //*******1.add data to parametr bucket */

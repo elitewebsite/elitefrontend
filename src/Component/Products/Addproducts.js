@@ -93,96 +93,103 @@ const Addproducts = () => {
 
   //cloudinary image upload function 
   const uploaderimg = (myimage) => {
-   
-      return new Promise((resolve, reject) => {
-        const dataForm = new FormData();
-        dataForm.append("file", myimage.img);
-        dataForm.append("upload_preset", "ofqztuvt")
-        dataForm.append("cloud_name", "dql4azndw")
-        //uploading image to cloudinary 
-        axios.post('https://api.cloudinary.com/v1_1/dql4azndw/image/upload', dataForm).then((res) => {
-          //getting only required data
-          resolve({ url: res.data.url, public_id: res.data.public_id })
-        }).catch((err) => {
-          notify(0, "sorrry error in clouidinary.")
-        })
+
+    return new Promise((resolve, reject) => {
+      const dataForm = new FormData();
+      dataForm.append("file", myimage.img);
+      dataForm.append("upload_preset", "ofqztuvt")
+      dataForm.append("cloud_name", "dql4azndw")
+      //uploading image to cloudinary 
+      axios.post('https://api.cloudinary.com/v1_1/dql4azndw/image/upload', dataForm).then((res) => {
+        //getting only required data
+        resolve({ url: res.data.url, public_id: res.data.public_id })
+      }).catch((err) => {
+        setLoading(false)
+        notify(0, "sorrry error in clouidinary.")
       })
-   
+    })
+
   }
 
   //couinary pdf upload function 
   const uploaderpdf = (myimage) => {
 
-      return new Promise((resolve, reject) => {
-        const dataForm = new FormData();
-        dataForm.append("file", myimage.image);
-        dataForm.append("upload_preset", "ofqztuvt")
-        dataForm.append("public_id", myimage.filename)
-        dataForm.append("cloud_name", "dql4azndw")
+    return new Promise((resolve, reject) => {
+      const dataForm = new FormData();
+      dataForm.append("file", myimage.image);
+      dataForm.append("upload_preset", "ofqztuvt")
+      dataForm.append("public_id", myimage.filename)
+      dataForm.append("cloud_name", "dql4azndw")
 
-        // uploading image to cloudinary 
-        axios.post('https://api.cloudinary.com/v1_1/dql4azndw/raw/upload', dataForm).then((res) => {
-          //getting only required data
-          resolve({ url: res.data.url, public_id: res.data.public_id, title: myimage.title })
-        }).catch((err) => {
-          notify(0, "sorrry error in clouidinary.")
-        })
+      // uploading image to cloudinary 
+      axios.post('https://api.cloudinary.com/v1_1/dql4azndw/raw/upload', dataForm).then((res) => {
+        //getting only required data
+        resolve({ url: res.data.url, public_id: res.data.public_id, title: myimage.title })
+      }).catch((err) => {
+        setLoading(false)
+        notify(0, "sorrry error in clouidinary.")
       })
+    })
 
-   
+
   }
 
   //handle the submit event
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formdata = new FormData(e.target)
-    const data = Object.fromEntries(formdata.entries())
-    setLoading(true)
+    if (arr.length !== 0) {
+      const formdata = new FormData(e.target)
+      const data = Object.fromEntries(formdata.entries())
+      setLoading(true)
 
-    // ***********image uloading start*********//
-    const resulsetimg = arr.map(async (val, idx) => {
-      const myresult = await uploaderimg(val)
-      return myresult
-    })
-    let imageResponses = await Promise.all(resulsetimg);
-    //**************image uploading end*******//
+      // ***********image uloading start*********//
+      const resulsetimg = arr.map(async (val, idx) => {
+        const myresult = await uploaderimg(val)
+        return myresult
+      })
+      let imageResponses = await Promise.all(resulsetimg);
+      //**************image uploading end*******//
 
-    //***********pdf uloading start ****//
-    const resulsetpdf = pdfBucket.map(async (val, idx) => {
-      const myresult = await uploaderpdf(val)
-      return myresult
-    })
-    let pdfResponses = await Promise.all(resulsetpdf);
-    //**************pdf uploading end/*********/
-    const payload = { ...data, info: JSON.stringify(value), pdffile: JSON.stringify(pdfResponses), images: JSON.stringify(imageResponses), youtube: JSON.stringify(addlink), news: JSON.stringify(addnewsdata) }
-    setLoading(false)
-    axios.post('https://elitebackend-sage.vercel.app/admincrud/addproduct', payload, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        "Authorization": localStorage.getItem('token')
-      },
-    }).then((res) => {
-      notify(1, "Product Added Successfully..")
-      setLoading(false)
-    }).catch((err) => {
-      setLoading(false)
-      if (err.response.status === 401) {
-        navigate('/logout')
-      }
-      else {
-        notify(0, "Internal server error..")
-      }
-    })
+      //***********pdf uloading start ****//
+      const resulsetpdf = pdfBucket.map(async (val, idx) => {
+        const myresult = await uploaderpdf(val)
+        return myresult
+      })
+      let pdfResponses = await Promise.all(resulsetpdf);
+      //**************pdf uploading end/*********/
+      const payload = { ...data, info: JSON.stringify(value), pdffile: JSON.stringify(pdfResponses), images: JSON.stringify(imageResponses), youtube: JSON.stringify(addlink), news: JSON.stringify(addnewsdata) }
 
-    e.target.series_name.value = ""
-    e.target.product_name.value = ""
-    e.target.model_no.value = ""
-    e.target.product_description.value = ""
-    e.target.youtube.value = ""
-    e.target.news.value = ""
+      axios.post('https://elitebackend-sage.vercel.app/admincrud/addproduct', payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": localStorage.getItem('token')
+        },
+      }).then((res) => {
+        notify(1, "Product Added Successfully..")
+        setLoading(false)
+      }).catch((err) => {
+        setLoading(false)
+        if (err.response.status === 401) {
+          navigate('/logout')
+        }
+        else {
+          notify(0, "Internal server error..")
+        }
+      })
+      e.target.series_name.value = ""
+      e.target.product_name.value = ""
+      e.target.model_no.value = ""
+      e.target.product_description.value = ""
+      e.target.youtube.value = ""
+      e.target.news.value = ""
+      e.target.pdffile.value = ""
+      setValue([])
+    }
+    else {
+      window.alert("please choose atleast one image")
+    }
 
-    e.target.pdffile.value = ""
-    setValue([])
+
   }
 
   //**********parameter section start ***********/
@@ -346,7 +353,7 @@ const Addproducts = () => {
                             {
                               arr.map((val, idx) => {
                                 return (
-                                  <div className='w-full flex gap-3 flex-col'>
+                                  <div className='w-full flex gap-3 flex-col' key={idx}>
                                     <img src={val.img} alt="" />
                                     <input type="button" className='px-4 py-2 leading-5 text-white transition-colors duration-300 transform bg-blue-700 rounded hover:bg-blue-600 focus:outline-none' value="Delete" onClick={() => { deleteImage(idx) }} />
                                   </div>
@@ -378,7 +385,7 @@ const Addproducts = () => {
                             {
                               pdfBucket.map((val, idx) => {
                                 return (
-                                  <div className='w-full flex gap-3 flex-col'>
+                                  <div className='w-full flex gap-3 flex-col' key={idx}>
                                     <p className='text-lg font-bold'>Title: {val.title}</p>
                                     <embed src={val.image} />
                                     <input type="button" className='px-4 py-2 leading-5 text-white transition-colors duration-300 transform bg-blue-700 rounded hover:bg-blue-600 focus:outline-none' value="Delete" onClick={() => { deletePdfData(idx) }} />
@@ -407,7 +414,7 @@ const Addproducts = () => {
                               addlink?.map((value, index) => {
                                 return (
 
-                                  <div className='flex flex-col gap-2'>
+                                  <div className='flex flex-col gap-2' key={index}>
                                     <iframe width="100%" height="200px" frameBorder="0" allowFullScreen
                                       src={`https://www.youtube.com/embed/${value.split('=')[1]}`}>
                                     </iframe>
@@ -432,7 +439,7 @@ const Addproducts = () => {
                               addnewsdata?.map((value, index) => {
                                 return (
 
-                                  <div className='flex flex-col gap-2'>
+                                  <div className='flex flex-col gap-2' key={index}>
                                     <p>{value}</p>
                                     <span onClick={() => { handleNewsDelete(index) }} className='px-4 py-2 leading-5 text-white transition-colors duration-300 transform bg-blue-700 rounded hover:bg-blue-600 focus:outline-none text-center font-bold' >Delete Link</span>
                                   </div>
