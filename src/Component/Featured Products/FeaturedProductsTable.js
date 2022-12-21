@@ -55,7 +55,7 @@ const FeaturedProductsTable = () => {
                 setStatus(!status)
 
             }).catch((err) => {
-                
+
                 if (err.response.status === 401) {
                     navigate('/logout')
                 }
@@ -82,7 +82,7 @@ const FeaturedProductsTable = () => {
                                 <p className="mt-1 mb-3 text-center text-lg text-gray-500 dark:text-gray-400 uppercase font-bold w-1/2 m-auto">Added Featured Products</p>
 
                                 <div className="add_btn mt-6 mb-6 flex justify-end mr-4">
-                                    <Link to="/featuredproducts" className='p-3 rounded-md font-bold bg-blue-600 text-white'>Add Feaured Products</Link>
+                                    <Link to="/featuredproducts" className='p-3 rounded-md font-bold bg-blue-600 text-white'>Add Featured Products</Link>
                                 </div>
 
                                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-2">
